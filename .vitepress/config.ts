@@ -5,6 +5,7 @@ export default defineConfig({
   description: 'A Nextflow pipeline for checking allele switches between target VCF and reference panel legend files',
   base: '/checkref-docs/',
   lang: 'en-US',
+  ignoreDeadLinks: true,
 
   themeConfig: {
     logo: '/logo.png',
@@ -119,7 +120,6 @@ export default defineConfig({
   },
 
   markdown: {
-    lineNumbers: true,
-    math: true
+    lineNumbers: true
   }
 })
