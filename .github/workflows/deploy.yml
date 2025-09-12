@@ -5,13 +5,17 @@ on:
     branches:
       - main
     paths:
-      - 'docs/**'
+      - '**/*.md'
+      - '.vitepress/**'
+      - 'package.json'
       - '.github/workflows/deploy.yml'
   pull_request:
     branches:
       - main
     paths:
-      - 'docs/**'
+      - '**/*.md'
+      - '.vitepress/**'
+      - 'package.json'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -40,25 +44,20 @@ jobs:
         with:
           node-version: 18
           cache: npm
-          cache-dependency-path: docs/package-lock.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
       - name: Install dependencies
-        run: |
-          cd docs
-          npm ci
+        run: npm ci
           
       - name: Build with VitePress
-        run: |
-          cd docs
-          npm run docs:build
+        run: npm run docs:build
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist
+          path: .vitepress/dist
 
   # Deployment job
   deploy:
