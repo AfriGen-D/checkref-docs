@@ -1,7 +1,7 @@
 {
-  "name": "{{ PACKAGE_NAME }}-docs",
-  "version": "{{ VERSION }}",
-  "description": "{{ PROJECT_DESCRIPTION }} - Documentation",
+  "name": "checkref-docs",
+  "version": "1.0.0",
+  "description": "CheckRef Pipeline Documentation - A Nextflow pipeline for allele switch detection and correction",
   "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev",
@@ -21,9 +21,9 @@
   ],
   "author": "AfriGen-D Project",
   "license": "MIT",
-  "homepage": "https://afrigen-d.github.io/{{ REPO_NAME }}",
+  "homepage": "https://afrigen-d.github.io/checkref-docs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AfriGen-D/{{ REPO_NAME }}.git"
+    "url": "https://github.com/AfriGen-D/checkref-docs.git"
   }
 }

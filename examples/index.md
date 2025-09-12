@@ -1,6 +1,6 @@
 # Examples
 
-This section provides practical examples for running {{ PROJECT_NAME }} in different scenarios.
+This section provides practical examples for running CheckRef in different scenarios.
 
 ## Basic Examples
 
@@ -10,25 +10,27 @@ The simplest way to run the pipeline:
 
 ```bash
 nextflow run main.nf \
-  --input samples.csv \
-  --outdir results/
+  --targetVcfs chr22.vcf.gz \
+  --referenceDir /path/to/reference/panels/ \
+  --outputDir results/
 ```
 
-**Sample sheet format:**
-```csv
-sample,fastq_1,fastq_2
-sample1,data/sample1_R1.fastq.gz,data/sample1_R2.fastq.gz
-sample2,data/sample2_R1.fastq.gz,data/sample2_R2.fastq.gz
+**Input files:**
+```bash
+# CheckRef processes VCF files directly, not FASTQ files
+# Example VCF file:
+chr22.vcf.gz  # Your target VCF file
+chr22.vcf.gz.tbi  # Tabix index
 ```
 
-### Example 2: Custom Reference Genome
+### Example 2: Custom Reference Panel
 
 ```bash
 nextflow run main.nf \
-  --input samples.csv \
-  --outdir results/ \
-  --fasta /path/to/custom_genome.fa \
-  --bwa_index /path/to/custom_genome_bwa/
+  --targetVcfs chr22.vcf.gz \
+  --referenceDir /path/to/custom/reference/panels/ \
+  --legendPattern "*chr22*custom*.legend.gz" \
+  --outputDir results/
 ```
 
 ## Analysis-Specific Examples

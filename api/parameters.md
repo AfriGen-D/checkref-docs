@@ -1,6 +1,6 @@
 # Parameters Reference
 
-Complete reference for all pipeline parameters in {{ PROJECT_NAME }}.
+Complete reference for all pipeline parameters in CheckRef.
 
 ## Input/Output Parameters
 
@@ -24,21 +24,21 @@ Complete reference for all pipeline parameters in {{ PROJECT_NAME }}.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `--genome` | `string` | `{{ DEFAULT_GENOME }}` | Reference genome assembly |
+| `--genome` | `string` | `null` | Reference genome assembly (optional) |
 | `--fasta` | `string` | `null` | Path to reference FASTA file |
 | `--fasta_fai` | `string` | `null` | Path to reference FASTA index |
 | `--bwa_index` | `string` | `null` | Path to BWA index |
 | `--save_reference` | `boolean` | `false` | Save generated reference files |
 
-## {{ ANALYSIS_TYPE }} Parameters
+## Allele Switch Analysis Parameters
 
 ### Core Analysis Parameters
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `--{{ PARAM1 }}` | `{{ TYPE1 }}` | `{{ DEFAULT1 }}` | {{ DESCRIPTION1 }} |
-| `--{{ PARAM2 }}` | `{{ TYPE2 }}` | `{{ DEFAULT2 }}` | {{ DESCRIPTION2 }} |
-| `--{{ PARAM3 }}` | `{{ TYPE3 }}` | `{{ DEFAULT3 }}` | {{ DESCRIPTION3 }} |
+| `--targetVcfs` | `string` | `null` | Path(s) to target VCF file(s) (required) |
+| `--referenceDir` | `string` | `null` | Directory containing reference legend files (required) |
+| `--fixMethod` | `string` | `remove` | Method to handle switches: 'remove' or 'correct' |
 
 ### Quality Control Parameters
 
@@ -70,10 +70,10 @@ Complete reference for all pipeline parameters in {{ PROJECT_NAME }}.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `--{{ PROCESS1 }}_cpus` | `integer` | `4` | CPUs for {{ PROCESS1 }} |
-| `--{{ PROCESS1 }}_memory` | `string` | `16.GB` | Memory for {{ PROCESS1 }} |
-| `--{{ PROCESS2 }}_cpus` | `integer` | `8` | CPUs for {{ PROCESS2 }} |
-| `--{{ PROCESS2 }}_memory` | `string` | `32.GB` | Memory for {{ PROCESS2 }} |
+| `--check_allele_switch_cpus` | `integer` | `1` | CPUs for allele switch detection |
+| `--check_allele_switch_memory` | `string` | `4.GB` | Memory for allele switch detection |
+| `--correct_sites_cpus` | `integer` | `1` | CPUs for site correction |
+| `--correct_sites_memory` | `string` | `4.GB` | Memory for site correction |
 
 ## Advanced Parameters
 
@@ -107,11 +107,10 @@ Complete reference for all pipeline parameters in {{ PROJECT_NAME }}.
 
 ```yaml
 # params.yml
-input: 'samples.csv'
-outdir: 'results/'
-genome: 'GRCh38'
-{{ PARAM1 }}: {{ VALUE1 }}
-{{ PARAM2 }}: {{ VALUE2 }}
+targetVcfs: 'chr22.vcf.gz'
+referenceDir: '/path/to/reference/panels/'
+outputDir: 'results/'
+fixMethod: 'correct'
 max_cpus: 16
 max_memory: '64.GB'
 ```
@@ -120,11 +119,10 @@ max_memory: '64.GB'
 
 ```json
 {
-  "input": "samples.csv",
-  "outdir": "results/",
-  "genome": "GRCh38",
-  "{{ PARAM1 }}": "{{ VALUE1 }}",
-  "{{ PARAM2 }}": "{{ VALUE2 }}",
+  "targetVcfs": "chr22.vcf.gz",
+  "referenceDir": "/path/to/reference/panels/",
+  "outputDir": "results/",
+  "fixMethod": "correct",
   "max_cpus": 16,
   "max_memory": "64.GB"
 }
@@ -163,20 +161,19 @@ ERROR ~ Invalid memory specification: '64GB' (should be '64.GB')
 
 ```bash
 nextflow run main.nf \
-  --input samples.csv \
-  --outdir results/ \
-  --genome GRCh38
+  --targetVcfs chr22.vcf.gz \
+  --referenceDir /path/to/reference/panels/ \
+  --outputDir results/
 ```
 
 ### Advanced Parameter Set
 
 ```bash
 nextflow run main.nf \
-  --input samples.csv \
-  --outdir results/ \
-  --genome GRCh38 \
-  --{{ PARAM1 }} {{ VALUE1 }} \
-  --{{ PARAM2 }} {{ VALUE2 }} \
+  --targetVcfs "chr20.vcf.gz,chr21.vcf.gz,chr22.vcf.gz" \
+  --referenceDir /path/to/reference/panels/ \
+  --outputDir results/ \
+  --fixMethod correct \
   --max_cpus 32 \
   --max_memory '128.GB' \
   --email user@example.com

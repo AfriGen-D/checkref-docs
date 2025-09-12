@@ -1,12 +1,12 @@
 # Getting Started
 
-{{ PROJECT_NAME }} is a Nextflow pipeline designed for {{ PROJECT_PURPOSE }}. This guide will help you get up and running with the pipeline.
+CheckRef is a Nextflow pipeline designed for detecting and correcting allele switches between target VCF files and reference panels. This guide will help you get up and running with the pipeline.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-- **Nextflow** (version {{ MIN_NEXTFLOW_VERSION }} or later)
+- **Nextflow** (version 21.04.0 or later)
 - **Container engine**: Docker, Singularity, or Conda
 - **Java** 11 or later (for Nextflow)
 
@@ -26,8 +26,8 @@ sudo mv nextflow /usr/local/bin/
 ### 2. Clone the Pipeline
 
 ```bash
-git clone https://github.com/AfriGen-D/{{ REPO_NAME }}.git
-cd {{ REPO_NAME }}
+git clone https://github.com/AfriGen-D/checkref.git
+cd checkref
 ```
 
 ### 3. Test the Installation
@@ -49,6 +49,6 @@ nextflow run main.nf -profile test
 If you encounter any issues:
 
 1. Check the [troubleshooting guide](/guide/troubleshooting)
-2. Search existing [GitHub issues](https://github.com/AfriGen-D/{{ REPO_NAME }}/issues)
+2. Search existing [GitHub issues](https://github.com/AfriGen-D/checkref/issues)
 3. Create a new issue with details about your problem
 4. Contact the AfriGen-D team at [helpdesk.afrigen-d.org](https://helpdesk.afrigen-d.org)

@@ -2,78 +2,80 @@
 layout: home
 
 hero:
-  name: "{{ PROJECT_NAME }}"
-  text: "{{ HERO_TEXT }}"
-  tagline: "{{ PROJECT_TAGLINE }}"
+  name: "CheckRef"
+  text: "Allele Switch Detection & Correction"
+  tagline: "A Nextflow pipeline for identifying and fixing allele switches between target VCF files and reference panels"
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/getting-started
+      link: /tutorials/quick-start
     - theme: alt
       text: View on GitHub
-      link: https://github.com/AfriGen-D/{{ REPO_NAME }}
+      link: https://github.com/AfriGen-D/checkref
 
 features:
-  - icon: 🔬
-    title: Nextflow Workflow
-    details: Scalable and reproducible bioinformatics pipeline built with Nextflow.
-  - icon: 🧬
-    title: African Genomics Focus
-    details: Optimized for population-specific analysis of African genomic datasets.
-  - icon: ☁️
-    title: Cloud-Ready
-    details: Run on local systems, HPC clusters, or cloud platforms with ease.
-  - icon: 📊
-    title: Rich Outputs
-    details: Generate comprehensive reports, QC metrics, and visualizations.
+  - icon: 🔍
+    title: Allele Switch Detection
+    details: Automatically identifies variants with flipped REF/ALT alleles, strand issues, and other inconsistencies.
   - icon: 🔧
-    title: Configurable
-    details: Flexible parameters and profiles for different use cases.
-  - icon: 📝
-    title: Well Documented
-    details: Complete documentation with examples and best practices.
+    title: Two Correction Methods
+    details: Choose to remove problematic variants or correct them by swapping alleles.
+  - icon: 📊
+    title: Multi-File Processing
+    details: Process multiple chromosomes simultaneously with automatic matching to reference panels.
+  - icon: 🧬
+    title: Population Genomics Ready
+    details: Works with any reference panel and supports diverse population datasets.
+  - icon: ⚡
+    title: Fast & Scalable
+    details: Parallel processing with Nextflow for efficient analysis of large cohorts.
+  - icon: 📋
+    title: Comprehensive QC
+    details: Detailed reports and quality metrics to validate your corrections.
 ---
 
 ## Quick Start
 
-Run the pipeline with minimal configuration:
+Get started with CheckRef in just a few commands:
 
 ```bash
 # Clone the repository
-git clone https://github.com/AfriGen-D/{{ REPO_NAME }}.git
-cd {{ REPO_NAME }}
-
-# Run with test data
-nextflow run main.nf -profile test
+git clone https://github.com/AfriGen-D/checkref.git
+cd checkref
 
 # Run with your data
-nextflow run main.nf --input samples.csv --outdir results/
+nextflow run main.nf \
+  --targetVcfs your_file.vcf.gz \
+  --referenceDir /path/to/reference/panels/ \
+  --outputDir results \
+  -profile singularity
 ```
 
-## Pipeline Overview
+## What CheckRef Does
 
 This Nextflow pipeline provides:
 
-- **Quality Control**: Comprehensive QC of input data
-- **Processing**: {{ PROCESSING_DESCRIPTION }}
-- **Analysis**: {{ ANALYSIS_DESCRIPTION }}
-- **Reporting**: Automated report generation with MultiQC
+- **Allele Switch Detection**: Compares your VCF against reference panels to identify orientation issues
+- **Smart Correction**: Choose to remove problematic variants or fix them by swapping REF/ALT alleles
+- **Quality Assessment**: Comprehensive statistics and validation reports
+- **Multi-File Support**: Process multiple chromosomes simultaneously with automatic matching
 
 ## Documentation
 
-- [Getting Started](/guide/getting-started) - Installation and basic usage
-- [Parameters](/api/parameters) - Complete parameter reference
-- [Examples](/examples/) - Example configurations and use cases
-- [Workflow Details](/workflow/) - Technical pipeline documentation
+- [**Tutorials**](/tutorials/) - Step-by-step learning exercises
+- [**Documentation**](/docs/) - Comprehensive reference material
+- [**API Reference**](/api/parameters) - Complete parameter documentation
+- [**Examples**](/examples/) - Ready-to-use configurations
 
 ## Requirements
 
-- Nextflow ≥ {{ MIN_NEXTFLOW_VERSION }}
+- Nextflow ≥ 21.04.0
 - Docker, Singularity, or Conda
-- {{ ADDITIONAL_REQUIREMENTS }}
+- Target VCF files (bgzipped and indexed)
+- Reference panel legend files
 
 ## Support
 
-- [GitHub Issues](https://github.com/AfriGen-D/{{ REPO_NAME }}/issues)
+- [GitHub Issues](https://github.com/AfriGen-D/checkref/issues)
 - [Helpdesk](https://helpdesk.afrigen-d.org)
 - [AfriGen-D](https://afrigen-d.org)
