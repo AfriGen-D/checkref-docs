@@ -64,7 +64,7 @@ This Nextflow pipeline provides:
 
 - [**Tutorials**](/tutorials/) - Step-by-step learning exercises
 - [**Documentation**](/docs/) - Comprehensive reference material
-- [**API Reference**](/api/parameters) - Complete parameter documentation
+- [**Parameters**](/api/parameters) - Complete parameter documentation
 - [**Examples**](/examples/) - Ready-to-use configurations
 
 ## Requirements

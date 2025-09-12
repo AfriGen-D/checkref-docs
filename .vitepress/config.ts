@@ -14,7 +14,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Tutorials', link: '/tutorials/' },
       { text: 'Documentation', link: '/docs/' },
-      { text: 'API Reference', link: '/api/parameters' },
+      { text: 'Parameters', link: '/api/parameters' },
       { text: 'Examples', link: '/examples/' }
     ],
 
@@ -43,12 +43,12 @@ export default defineConfig({
       ],
       '/api/': [
         {
-          text: 'Reference',
+          text: 'Command Line Reference',
           collapsed: false,
           items: [
             { text: 'Parameters', link: '/api/parameters' },
             { text: 'Profiles', link: '/api/profiles' },
-            { text: 'Modules', link: '/api/modules' }
+            { text: 'Usage Examples', link: '/api/usage' }
           ]
         }
       ],
