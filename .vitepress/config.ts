@@ -8,10 +8,7 @@ export default defineConfig({
   ignoreDeadLinks: true,
 
   themeConfig: {
-    logo: {
-      src: '/checkref-logo.svg',
-      alt: 'AfriGen-D Logo'
-    },
+    logo: '/logo.png',
 
     nav: [
       { text: 'Home', link: '/' },
