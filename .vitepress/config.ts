@@ -81,9 +81,9 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'Documentation Overview', link: '/docs/' },
-            { text: 'Understanding Results', link: '/docs/understanding-results' },
             { text: 'Correction Methods', link: '/docs/correction-methods' },
-            { text: 'Single File Analysis', link: '/docs/single-file' }
+            { text: 'Single File Analysis', link: '/docs/single-file' },
+            { text: 'Understanding Results', link: '/docs/understanding-results' }
           ]
         },
         {
