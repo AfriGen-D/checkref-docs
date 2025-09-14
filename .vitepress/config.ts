@@ -12,9 +12,9 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Tutorials', link: '/tutorials/' },
       { text: 'Documentation', link: '/docs/' },
       { text: 'Reference', link: '/reference/' },
+      { text: 'Tutorials', link: '/tutorials/' },
       { text: 'Examples', link: '/examples/' }
     ],
 
