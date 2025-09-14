@@ -350,8 +350,8 @@ bcftools view method_test_correct/chr22.corrected.vcf.gz | \
 After choosing your method:
 
 **For further learning:**
-- [Results Validation Tutorial](./results-validation) - Verify your chosen method worked
-- [QC Setup Tutorial](./qc-setup) - Monitor method performance over time
+- [Understanding Results](/docs/understanding-results) - Verify your chosen method worked
+- [Quality Control Guide](/docs/quality-control) - Monitor method performance over time
 
 **For comprehensive details:**
 - [Correction Methods Documentation](/docs/correction-methods) - Complete technical reference

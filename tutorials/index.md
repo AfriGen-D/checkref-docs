@@ -43,7 +43,7 @@ Each tutorial follows a consistent structure:
 
 ## Need Help?
 
-- Check our [Troubleshooting guide](./troubleshooting) for common issues
+- Check our [Troubleshooting guide](/docs/troubleshooting) for common issues
 - Browse the [API Reference](/api/parameters) for detailed parameter information
 - Visit our [GitHub repository](https://github.com/AfriGen-D/checkref) to report bugs or request features
 - Contact the AfriGen-D team at [helpdesk.afrigen-d.org](https://helpdesk.afrigen-d.org)

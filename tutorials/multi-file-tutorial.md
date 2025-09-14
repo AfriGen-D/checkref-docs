@@ -276,11 +276,11 @@ Now that you can process multiple files:
 
 **Advanced techniques:**
 - [Method Selection Tutorial](./method-selection) - Choose optimal correction strategies
-- [Performance Tutorial](./performance-tutorial) - Optimize for large datasets
+- [Understanding Results](/docs/understanding-results) - Interpret multi-file output
 
 **Quality control:**
-- [Results Validation Tutorial](./results-validation) - Verify multi-file results
-- [QC Setup Tutorial](./qc-setup) - Automated quality checks
+- [Quality Control Guide](/docs/quality-control) - Verify multi-file results
+- [Troubleshooting Guide](/docs/troubleshooting) - Solve multi-file issues
 
 **For comprehensive details:**
 - [Multi-File Documentation](/docs/multi-file) - Complete technical reference

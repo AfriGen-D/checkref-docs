@@ -341,8 +341,8 @@ zcat reference_panels/chr22.legend.gz | grep "16050075"
 Once you understand your results:
 
 1. **Good Results**: Proceed to [Multi-File Processing](./multi-file)
-2. **Quality Issues**: Review [Data Preparation](./data-preparation)
-3. **Performance Concerns**: Check [Performance Optimization](./performance)
+2. **Quality Issues**: Review [Quality Control](./quality-control)
+3. **Performance Concerns**: Check [Troubleshooting](./troubleshooting)
 4. **Need Corrections**: Learn about [Correction Methods](./correction-methods)
 
 ## Quick Reference

@@ -146,8 +146,8 @@ Congratulations! You've completed your first CheckRef analysis. Here's what to e
 - [Method Selection Tutorial](./method-selection) - Choose remove vs correct
 
 **If you had issues:**
-- [Understanding Results Tutorial](./understanding-results-tutorial) - Interpret your output
-- [Troubleshooting Tutorial](./troubleshooting-tutorial) - Solve common problems
+- [Understanding Results](/docs/understanding-results) - Interpret your output
+- [Troubleshooting Guide](/docs/troubleshooting) - Solve common problems
 
 **For more details:**
 - [Documentation](/docs/) - Comprehensive reference material

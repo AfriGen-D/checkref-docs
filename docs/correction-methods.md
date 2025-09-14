@@ -417,9 +417,9 @@ cat corrected_results/validation/switch_validation.txt
 After mastering correction methods:
 
 1. **[Quality Control](./quality-control)** - Validate your corrections
-2. **[Performance](./performance)** - Optimize correction speed
-3. **[Custom Parameters](./custom-parameters)** - Fine-tune correction behavior
-4. **[Batch Processing](./batch-processing)** - Apply methods at scale
+2. **[Multi-File Processing](./multi-file)** - Apply methods at scale
+3. **[Understanding Results](./understanding-results)** - Interpret correction outcomes
+4. **[Troubleshooting](./troubleshooting)** - Solve correction issues
 
 ## Quick Reference
 

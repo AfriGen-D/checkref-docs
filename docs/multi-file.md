@@ -12,7 +12,7 @@ By the end of this tutorial, you'll be able to:
 
 ## Prerequisites
 
-- Completed the [Basic Usage](./basic-usage) tutorial
+- Completed the [Single File Analysis](./single-file) tutorial
 - Multiple VCF files (typically per-chromosome)
 - Reference panel with matching chromosome files
 - Understanding of CheckRef output structure
@@ -393,10 +393,10 @@ project/
 
 After mastering multi-file processing:
 
-1. **[Batch Processing](./batch-processing)** - Automate large-scale analyses
-2. **[Performance Optimization](./performance)** - Speed up processing
-3. **[Quality Control](./quality-control)** - Validate multi-chromosome results
-4. **[Custom Parameters](./custom-parameters)** - Fine-tune for your data
+1. **[Quality Control](./quality-control)** - Validate multi-chromosome results
+2. **[Understanding Results](./understanding-results)** - Interpret multi-file output
+3. **[Correction Methods](./correction-methods)** - Choose optimal strategies
+4. **[Troubleshooting](./troubleshooting)** - Solve multi-file issues
 
 ## Quick Reference
 

@@ -31,13 +31,11 @@ export default defineConfig({
           ]
         },
         {
-          text: 'Pipeline Usage',
+          text: 'Advanced Usage',
           collapsed: false,
           items: [
             { text: 'Input Files', link: '/guide/input-files' },
-            { text: 'Running the Pipeline', link: '/guide/running' },
-            { text: 'Output Files', link: '/guide/output-files' },
-            { text: 'Troubleshooting', link: '/guide/troubleshooting' }
+            { text: 'Configuration', link: '/guide/configuration' }
           ]
         }
       ],

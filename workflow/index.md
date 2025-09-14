@@ -1,63 +1,69 @@
-# Workflow Overview
+# CheckRef Workflow Overview
 
-{{ PROJECT_NAME }} is a comprehensive Nextflow pipeline for {{ WORKFLOW_PURPOSE }}.
+CheckRef is a comprehensive Nextflow pipeline for detecting and correcting allele switches between target VCF files and reference panel legend files.
 
 ## Pipeline Architecture
 
 ```mermaid
 graph TD
-    A[Input Samples] --> B[Quality Control]
-    B --> C[{{ STEP_1 }}]
-    C --> D[{{ STEP_2 }}]
-    D --> E[{{ STEP_3 }}]
-    E --> F[Report Generation]
-    F --> G[Output Results]
-    
-    H[Reference Data] --> C
-    H --> D
-    H --> E
+    A[Target VCF Files] --> B[VCF Validation]
+    C[Reference Legend Files] --> D[Reference Matching]
+    B --> E[Allele Switch Detection]
+    D --> E
+    E --> F{Fix Method}
+    F -->|remove| G[Remove Switched Sites]
+    F -->|correct| H[Correct Switched Sites]
+    G --> I[Verification]
+    H --> I
+    I --> J[Summary Generation]
+    J --> K[Final Reports]
+
+    style F fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
+    style I fill:#bfb,stroke:#333,stroke-width:2px
 ```
 
 ## Workflow Steps
 
-### 1. Input Validation
-- Validates sample sheet format
-- Checks input file accessibility
-- Verifies parameter compatibility
+### 1. Input Validation (VALIDATE_VCF_FILES)
+- Validates VCF file integrity and format
+- Checks file accessibility and compression
+- Verifies bcftools compatibility
+- Generates validation reports
 
-### 2. Quality Control
-- **FastQC**: Raw read quality assessment
-- **{{ QC_TOOL_1 }}**: {{ QC_DESCRIPTION_1 }}
-- **{{ QC_TOOL_2 }}**: {{ QC_DESCRIPTION_2 }}
+### 2. Reference Matching
+- Automatically detects chromosome information from filenames
+- Matches target VCF files with corresponding reference legend files
+- Validates reference panel structure and format
 
-### 3. {{ STEP_1_NAME }}
-{{ STEP_1_DESCRIPTION }}
+### 3. Allele Switch Detection (CHECK_ALLELE_SWITCH)
+- Compares target VCF variants against reference panel alleles
+- Identifies matching, switched, complementary, and other inconsistencies
+- Generates detailed switch analysis results
+- Creates summary statistics
 
-**Key processes:**
-- {{ PROCESS_1_1 }}
-- {{ PROCESS_1_2 }}
-- {{ PROCESS_1_3 }}
+### 4. Allele Switch Correction
+Two correction methods available:
 
-### 4. {{ STEP_2_NAME }}
-{{ STEP_2_DESCRIPTION }}
+#### Remove Method (REMOVE_SWITCHED_SITES)
+- Removes variants with detected allele switches
+- Creates cleaned VCF with problematic sites excluded
+- Preserves high-quality variants only
 
-**Key processes:**
-- {{ PROCESS_2_1 }}
-- {{ PROCESS_2_2 }}
-- {{ PROCESS_2_3 }}
+#### Correct Method (CORRECT_SWITCHED_SITES)
+- Fixes allele switches by swapping REF and ALT alleles
+- Adds SWITCHED=1 flag to corrected variants
+- Maintains all variants while fixing orientation issues
 
-### 5. {{ STEP_3_NAME }}
-{{ STEP_3_DESCRIPTION }}
+### 5. Verification (VERIFY_CORRECTIONS)
+- Re-analyzes corrected/cleaned VCF files
+- Validates that corrections were applied successfully
+- Generates verification reports and statistics
 
-**Key processes:**
-- {{ PROCESS_3_1 }}
-- {{ PROCESS_3_2 }}
-- {{ PROCESS_3_3 }}
-
-### 6. Report Generation
-- **MultiQC**: Comprehensive quality report
-- **Pipeline Report**: Execution statistics and metrics
-- **Custom Reports**: {{ CUSTOM_REPORT_DESC }}
+### 6. Summary Generation (CREATE_SUMMARY)
+- Aggregates results across all processed chromosomes
+- Creates comprehensive analysis summaries
+- Generates final execution reports
 
 ## Data Flow
 
@@ -65,50 +71,51 @@ graph TD
 
 | Data Type | Format | Description |
 |-----------|--------|-------------|
-| **Raw Reads** | FASTQ | {{ RAW_READS_DESC }} |
-| **Reference Genome** | FASTA | {{ REF_GENOME_DESC }} |
-| **{{ DATA_TYPE_1 }}** | {{ FORMAT_1 }} | {{ DESC_1 }} |
-| **{{ DATA_TYPE_2 }}** | {{ FORMAT_2 }} | {{ DESC_2 }} |
+| **Target VCF** | VCF.gz | Bgzipped VCF files with variants to analyze |
+| **Reference Legend** | Legend.gz | Reference panel legend files with allele data |
+| **VCF Index** | TBI | Tabix index files for VCF access |
 
 ### Intermediate Files
 
 | File Type | Format | Description |
 |-----------|--------|-------------|
-| **{{ INTER_FILE_1 }}** | {{ INTER_FORMAT_1 }} | {{ INTER_DESC_1 }} |
-| **{{ INTER_FILE_2 }}** | {{ INTER_FORMAT_2 }} | {{ INTER_DESC_2 }} |
-| **{{ INTER_FILE_3 }}** | {{ INTER_FORMAT_3 }} | {{ INTER_DESC_3 }} |
+| **Switch Results** | TSV | Detailed variant-level switch analysis |
+| **Validation Reports** | TXT | VCF file validation status and details |
+| **Correction Stats** | TXT | Statistics on correction success/failure |
 
 ### Output Files
 
 | File Type | Format | Description |
 |-----------|--------|-------------|
-| **{{ OUTPUT_FILE_1 }}** | {{ OUTPUT_FORMAT_1 }} | {{ OUTPUT_DESC_1 }} |
-| **{{ OUTPUT_FILE_2 }}** | {{ OUTPUT_FORMAT_2 }} | {{ OUTPUT_DESC_2 }} |
-| **{{ OUTPUT_FILE_3 }}** | {{ OUTPUT_FORMAT_3 }} | {{ OUTPUT_DESC_3 }} |
+| **Corrected VCF** | VCF.gz | Fixed VCF with corrected allele orientations |
+| **Cleaned VCF** | VCF.gz | VCF with problematic variants removed |
+| **Summary Reports** | TXT/HTML | Comprehensive analysis summaries |
 
 ## Process Dependencies
 
 ```mermaid
 graph LR
-    A[{{ PROCESS_A }}] --> B[{{ PROCESS_B }}]
-    A --> C[{{ PROCESS_C }}]
-    B --> D[{{ PROCESS_D }}]
-    C --> D
-    D --> E[{{ PROCESS_E }}]
-    E --> F[MultiQC]
+    A[VALIDATE_VCF_FILES] --> B[CHECK_ALLELE_SWITCH]
+    B --> C{fixMethod}
+    C -->|remove| D[REMOVE_SWITCHED_SITES]
+    C -->|correct| E[CORRECT_SWITCHED_SITES]
+    D --> F[VERIFY_CORRECTIONS]
+    E --> F
+    B --> G[CREATE_SUMMARY]
+    F --> H[Final Reports]
 ```
 
 ## Parallelization Strategy
 
-### Sample-Level Parallelization
-- Each sample processed independently
-- Parallel execution across multiple samples
-- Dynamic resource allocation based on sample size
+### Chromosome-Level Parallelization
+- Each chromosome processed independently
+- Parallel execution across multiple chromosomes
+- Dynamic resource allocation based on VCF file size
 
 ### Process-Level Parallelization
-- Multi-threading within processes where supported
-- Scatter-gather patterns for large datasets
-- Memory-aware task distribution
+- Concurrent validation of multiple VCF files
+- Parallel switch detection across chromosomes
+- Independent correction/removal operations
 
 ## Resource Requirements
 
@@ -116,24 +123,24 @@ graph LR
 
 | Process | CPUs | Memory | Time |
 |---------|------|--------|------|
-| **{{ PROCESS_A }}** | {{ CPU_A }} | {{ MEM_A }} | {{ TIME_A }} |
-| **{{ PROCESS_B }}** | {{ CPU_B }} | {{ MEM_B }} | {{ TIME_B }} |
-| **{{ PROCESS_C }}** | {{ CPU_C }} | {{ MEM_C }} | {{ TIME_C }} |
-| **{{ PROCESS_D }}** | {{ CPU_D }} | {{ MEM_D }} | {{ TIME_D }} |
+| **VALIDATE_VCF_FILES** | 1 | 2.GB | 30.min |
+| **CHECK_ALLELE_SWITCH** | 4 | 16.GB | 8.h |
+| **CORRECT_SWITCHED_SITES** | 2 | 8.GB | 4.h |
+| **VERIFY_CORRECTIONS** | 1 | 4.GB | 2.h |
 
 ### Scaling Guidelines
 
-**Small dataset (< 10 samples):**
+**Small dataset (1-3 chromosomes):**
 - CPUs: 4-8
 - Memory: 16-32 GB
 - Runtime: 2-6 hours
 
-**Medium dataset (10-100 samples):**
+**Medium dataset (4-10 chromosomes):**
 - CPUs: 16-32
 - Memory: 64-128 GB
 - Runtime: 6-24 hours
 
-**Large dataset (> 100 samples):**
+**Large dataset (>10 chromosomes):**
 - CPUs: 32-64
 - Memory: 128-512 GB
 - Runtime: 24-72 hours
@@ -167,20 +174,20 @@ graph LR
 
 ### Common Bottlenecks
 
-- **I/O Intensive Steps**: {{ IO_BOTTLENECK_DESC }}
-- **Memory Intensive Steps**: {{ MEM_BOTTLENECK_DESC }}
-- **CPU Intensive Steps**: {{ CPU_BOTTLENECK_DESC }}
+- **I/O Intensive Steps**: VCF reading/writing operations
+- **Memory Intensive Steps**: Large VCF file processing in memory
+- **CPU Intensive Steps**: Allele comparison and switch detection algorithms
 
 ## Quality Control Metrics
 
-### Per-Sample Metrics
-- {{ METRIC_1 }}: {{ METRIC_1_DESC }}
-- {{ METRIC_2 }}: {{ METRIC_2_DESC }}
-- {{ METRIC_3 }}: {{ METRIC_3_DESC }}
+### Per-Chromosome Metrics
+- **Overlap Rate**: Percentage of target variants found in reference
+- **Match Rate**: Percentage of variants with matching alleles
+- **Switch Rate**: Percentage of variants with detected switches
 
-### Cohort-Level Metrics
-- {{ COHORT_METRIC_1 }}: {{ COHORT_METRIC_1_DESC }}
-- {{ COHORT_METRIC_2 }}: {{ COHORT_METRIC_2_DESC }}
+### Workflow-Level Metrics
+- **Validation Success**: Percentage of VCF files passing validation
+- **Correction Success**: Percentage of switches successfully corrected
 
 ## Related Documentation
 
