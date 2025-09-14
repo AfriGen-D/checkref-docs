@@ -9,16 +9,31 @@ CheckRef is a Nextflow pipeline that identifies and corrects allele switches bet
 ## Documentation Sections
 
 ### Core Concepts
-- [**Understanding Results**](./understanding-results) - Complete guide to interpreting CheckRef output
-- [**Correction Methods**](./correction-methods) - Detailed comparison of remove vs correct approaches
+- [**Understanding Results**](./understanding-results) - Complete guide to interpreting CheckRef output and validation reports
+- [**Correction Methods**](./correction-methods) - Detailed comparison of remove vs correct approaches with automated validation
 - [**Single File Analysis**](./single-file) - In-depth single-chromosome processing
 
 ### Processing Workflows  
 - [**Multi-File Processing**](./multi-file) - Comprehensive multi-chromosome analysis
-- [**Quality Control**](./quality-control) - Complete QC procedures and validation
+- [**Quality Control**](./quality-control) - Complete QC procedures, validation workflows, and automated quality assessment
 
 ### Reference Materials
-- [**Troubleshooting**](./troubleshooting) - Complete problem-solving guide
+- [**Troubleshooting**](./troubleshooting) - Complete problem-solving guide including validation issues
+
+## New Features
+
+### Automated Validation
+CheckRef now includes built-in validation for correction results:
+- **Automatic quality assessment** when using `--fixMethod correct`
+- **Allele frequency validation** to detect unexpected changes
+- **Switch accuracy verification** to confirm corrections were applied
+- **Interactive HTML reports** for comprehensive result review
+
+### Enhanced Quality Control
+- Real-time validation during pipeline execution
+- Comprehensive validation reports with actionable recommendations
+- Configurable validation thresholds for different data types
+- Integration with existing QC workflows
 
 ## When to Use Documentation vs Tutorials
 

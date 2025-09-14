@@ -192,6 +192,64 @@ bcftools view results/chr22.corrected.vcf.gz | grep "SWITCHED=1" | wc -l
 grep "SWITCH\|COMPLEMENT" results/chr22_allele_switch_results.tsv | wc -l
 ```
 
+## Validation Reports (Correct Method Only)
+
+When using `--fixMethod correct`, CheckRef generates additional validation files:
+
+### Validation Directory Structure
+
+```
+results/validation/
+├── validation_summary.html    # Interactive HTML report
+├── af_comparison.txt         # Allele frequency analysis
+├── switch_validation.txt     # Switch accuracy metrics
+└── [intermediate files]      # Supporting data files
+```
+
+### HTML Validation Report
+
+The main validation report (`validation_summary.html`) provides:
+
+- **Summary statistics** for correction quality
+- **Allele frequency analysis** showing variants with significant changes
+- **Switch validation** confirming corrections were applied correctly
+- **Recommendations** for interpreting results
+
+### Key Validation Metrics
+
+**Switch Accuracy:**
+```
+Expected switches: 8,234
+Applied switches: 8,234
+Accuracy: 100.00%
+```
+
+**Allele Frequency Changes:**
+```
+Variants with significant changes: 45 (0.05%)
+Mean frequency difference: 0.0012
+Maximum frequency difference: 0.0234
+```
+
+### Validation Quality Thresholds
+
+| Metric | Excellent | Good | Investigate |
+|--------|-----------|------|-------------|
+| Switch accuracy | >98% | 90-98% | <90% |
+| AF change rate | <0.1% | 0.1-1% | >1% |
+| Mean AF difference | <0.01 | 0.01-0.05 | >0.05 |
+
+### Using Validation Results
+
+**High-quality corrections:**
+- Proceed with downstream analysis
+- Use corrected VCF with confidence
+
+**Quality concerns:**
+- Review flagged variants manually
+- Consider using remove method instead
+- Adjust quality filters and re-run
+
 ## Real-World Examples
 
 ### Example 1: High-Quality Dataset

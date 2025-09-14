@@ -532,6 +532,112 @@ cp -r /network/ref/panels/ /local/tmp/ref/
 --referenceDir /local/tmp/ref/
 ```
 
+## Validation Issues
+
+### Issue 13: Validation Failures
+
+**Error Message:**
+```
+ERROR ~ Validation workflow failed
+```
+
+**Diagnosis:**
+```bash
+# Check validation logs
+cat work/*/validation*/script.log
+
+# Verify input files exist
+ls results/*.corrected.vcf.gz
+ls results/*_allele_switch_results.tsv
+
+# Check Python dependencies
+python3 -c "import pandas, numpy"
+```
+
+**Solutions:**
+```bash
+# Disable validation if problematic
+nextflow run main.nf \
+  --targetVcfs input.vcf.gz \
+  --referenceDir /ref/panels/ \
+  --fixMethod correct \
+  --skip_validation true
+
+# Install missing Python packages
+pip install pandas numpy
+
+# Use different container
+-profile docker  # or -profile singularity
+```
+
+### Issue 14: Poor Validation Results
+
+**Symptoms:**
+```
+Switch accuracy: 45.00%  # Low accuracy
+AF changes: 15.00%       # High change rate
+```
+
+**Diagnosis:**
+```bash
+# Check correction quality
+grep "SWITCHED=1" results/*.corrected.vcf.gz | wc -l
+
+# Compare with expected switches
+grep -E "SWITCH|COMPLEMENT" results/*_results.tsv | wc -l
+
+# Review problematic variants
+head -20 results/validation/af_comparison.txt
+```
+
+**Solutions:**
+```bash
+# Use more conservative approach
+--fixMethod remove
+
+# Apply stricter quality filters
+bcftools view -i 'QUAL>=30 && INFO/DP>=20' input.vcf.gz
+
+# Try different reference panel
+--referenceDir /alternative/ref/panels/
+
+# Adjust validation thresholds
+--validation_af_threshold 0.10
+--validation_fold_threshold 3.0
+```
+
+### Issue 15: Missing Validation Files
+
+**Symptoms:**
+- No validation directory created
+- Validation processes not running
+
+**Diagnosis:**
+```bash
+# Check if correct method was used
+grep "fixMethod" .nextflow.log
+
+# Verify validation workflow inclusion
+grep "VALIDATE_CORRECTIONS" main.nf
+
+# Check process execution
+nextflow log last -f name,status
+```
+
+**Solutions:**
+```bash
+# Ensure correct method is specified
+--fixMethod correct  # Validation only runs with correct method
+
+# Force validation re-run
+rm -rf work/validation*
+nextflow run main.nf -resume
+
+# Check container availability
+docker pull python:3.9-slim
+docker pull quay.io/biocontainers/bcftools:1.17--haef29d1_0
+```
+
 ## Advanced Troubleshooting
 
 ### Debug Mode

@@ -361,6 +361,57 @@ bcftools view original.vcf.gz 22:16050075-16050080
 zcat /ref/panels/chr22.legend.gz | grep "16050075"
 ```
 
+## Automated Validation
+
+CheckRef now includes built-in validation for the correct method:
+
+### Validation Features
+
+When using `--fixMethod correct`, CheckRef automatically:
+
+1. **Compares allele frequencies** before and after correction
+2. **Validates switch accuracy** by checking that expected switches were applied
+3. **Generates HTML reports** with detailed validation results
+4. **Flags problematic variants** that may need manual review
+
+### Validation Output
+
+```bash
+# Validation results are saved to:
+results/validation/validation_summary.html  # Main report
+results/validation/af_comparison.txt        # Frequency analysis
+results/validation/switch_validation.txt    # Switch accuracy
+```
+
+### Interpreting Validation Results
+
+**Good validation results:**
+- Switch accuracy >95%
+- <1% of variants with significant AF changes
+- Mean AF difference <0.01
+
+**Investigate if:**
+- Switch accuracy <90%
+- >5% variants with AF changes
+- Large frequency differences (>0.1)
+
+### Example Validation Workflow
+
+```bash
+# Run correction with validation
+nextflow run main.nf \
+  --targetVcfs sample.vcf.gz \
+  --referenceDir /ref/panels/ \
+  --fixMethod correct \
+  --outputDir corrected_results
+
+# Review validation report
+open corrected_results/validation/validation_summary.html
+
+# Check specific metrics
+cat corrected_results/validation/switch_validation.txt
+```
+
 ## Next Steps
 
 After mastering correction methods:
