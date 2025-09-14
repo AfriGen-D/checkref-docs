@@ -112,6 +112,38 @@
 }
 
 /**
+ * Custom: Full-width Hero Text
+ * -------------------------------------------------------------------------- */
+
+.VPHero .container {
+  max-width: none !important;
+  padding: 0 24px !important;
+}
+
+.VPHero .main {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.VPHero .name,
+.VPHero .text,
+.VPHero .tagline {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .VPHero .container {
+    padding: 0 48px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .VPHero .container {
+    padding: 0 64px !important;
+  }
+}
+/**
  * Component: Custom Block
  * -------------------------------------------------------------------------- */
 
